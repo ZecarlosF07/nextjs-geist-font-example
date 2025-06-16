@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id              Int             @id @default(autoincrement())
+  businessName    String
+  tradeName       String?
+  ruc            String          @unique
+  fiscalAddress  String
+  activity       String
+  anniversaryDate DateTime?
+  corporatePhone String?
+  corporateEmail String?
+  facebookUrl    String?
+  instagramUrl   String?
+  tiktokUrl      String?
+  status         String          @default("Activo")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  representatives Representative[]
+  areaContacts   AreaContact[]
+  subscriptions  Subscription[]
+}
+
+model Representative {
+  id        Int      @id @default(autoincrement())
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId Int
+  type      String   // LEGAL, CHAMBER, BUSINESS
+  name      String
+  position  String
+  email     String?
+  dni       String?
+  phone     String?
+  birthDate DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AreaContact {
+  id        Int      @id @default(autoincrement())
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId Int
+  name      String
+  position  String
+  email     String?
+  phone     String?
+  area      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id            Int      @id @default(autoincrement())
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId     Int
+  plan         String
+  status       String   @default("Activo")
+  startDate    DateTime @default(now())
+  endDate      DateTime
+  amount       Decimal
+  paymentStatus String  @default("Pendiente")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
