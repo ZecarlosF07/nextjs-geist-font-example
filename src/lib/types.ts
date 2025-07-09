@@ -36,6 +36,7 @@ export interface Company {
   status: string;
   representatives?: Representative[];
   areaContacts?: AreaContact[];
+  tags?: string[]
 }
 
 export interface FormData {
