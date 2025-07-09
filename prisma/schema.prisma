@@ -14,21 +14,22 @@ model Company {
   id              Int             @id @default(autoincrement())
   businessName    String
   tradeName       String?
-  ruc            String          @unique
-  fiscalAddress  String
-  activity       String
+  ruc             String          @unique
+  fiscalAddress   String
+  activity        String
   anniversaryDate DateTime?
-  corporatePhone String?
-  corporateEmail String?
-  facebookUrl    String?
-  instagramUrl   String?
-  tiktokUrl      String?
-  status         String          @default("Activo")
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  corporatePhone  String?
+  corporateEmail  String?
+  facebookUrl     String?
+  instagramUrl    String?
+  tiktokUrl       String?
+  status          String          @default("Activo")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
   representatives Representative[]
-  areaContacts   AreaContact[]
-  subscriptions  Subscription[]
+  areaContacts    AreaContact[]
+  subscriptions   Subscription[]
+  tags            String[]        @default([])
 }
 
 model Representative {
@@ -63,12 +64,12 @@ model Subscription {
   id            Int      @id @default(autoincrement())
   company       Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId     Int
-  plan         String
-  status       String   @default("Activo")
-  startDate    DateTime @default(now())
-  endDate      DateTime
-  amount       Decimal
-  paymentStatus String  @default("Pendiente")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  plan          String
+  status        String   @default("Activo")
+  startDate     DateTime @default(now())
+  endDate       DateTime
+  amount        Decimal
+  paymentStatus String   @default("Pendiente")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
